@@ -2,7 +2,9 @@
 This is how I organize all my random configs. 
 
 ## Usage
-Root level files are "environment" files that source all configs for specific setting environment (i.e. work, home, etc). Those files load plugins found in /plugins that are usually program, app, system specific.
+Clone this into your home directory.
+
+Root level files are "environment" files that source all configs for specific setting environment (i.e. work, home, etc). Those files load plugins found in `/plugins` that are usually program, app, or system specific.
 
 In macOS, remove everything and add `source ~/config/<env>.bash` to your `~/.bash_profile`
 

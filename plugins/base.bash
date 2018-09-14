@@ -1,6 +1,5 @@
 # general aliases
 alias resource='source ~/.bash_profile'
-alias goodmorning='weather && echo "" && echo "" &&  news'
 alias ~='cd ~'
 alias c='clear'
 alias ..='cd ..'

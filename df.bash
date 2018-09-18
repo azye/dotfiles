@@ -16,7 +16,7 @@ export PKG_CONFIG="pkg-config"
 # source plugins
 source ${PLUGIN_PATH}/base.bash
 source ${PLUGIN_PATH}/mac.bash
-source ${PLUGIN_PATH}/docker-compose.bash
+source ${PLUGIN_PATH}/docker.bash
 source ${PLUGIN_PATH}/k8s.bash
 source ${PLUGIN_PATH}/go.bash
 source ${PLUGIN_PATH}/git.bash

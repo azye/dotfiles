@@ -22,4 +22,4 @@ parse_git_branch() {
 }
 
 # add confirmation for clobbering files
-set -o noclobber 
+set -o noclobber

@@ -1,7 +1,7 @@
 hdiutil attach ~/Documents/CaseSensitive.dmg -mountpoint /Volumes/CaseSensitive
 
 # configs dir must be installed to home directory
-CONFIG_PATH=~/configs
+CONFIG_PATH=`dirname $BASH_SOURCE`
 PLUGIN_PATH=${CONFIG_PATH}/plugins
 
 # set environment variables
@@ -23,8 +23,6 @@ source ${PLUGIN_PATH}/git.bash
 source ${PLUGIN_PATH}/git-completion.bash
 source ${PLUGIN_PATH}/local.bash
 
-alias settings='subl ${CONFIG_PATH}/df.bash'
-alias tallybuild='docker-compose up --build'
 alias tallyb='docker-compose up --build'
 alias news='curl -s http://feeds.bbci.co.uk/news/rss.xml?edition=us | grep "<title>" | sed "s/ <title><\!\[CDATA\[//g;s/\]\]><\/title>//;" | grep -v "BBC News"'
 alias weather='curl wttr.in/tiburon'

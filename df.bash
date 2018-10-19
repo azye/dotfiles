@@ -5,7 +5,7 @@ CONFIG_PATH=~/configs
 PLUGIN_PATH=${CONFIG_PATH}/plugins
 
 # set environment variables
-export GOPATH=/Volumes/CaseSensitive/go/
+export GOPATH=/Volumes/CaseSensitive/go
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 export CGO_CPPFLAGS="-I/usr/local/Cellar/opencv/3.4.2/include -I/usr/local/Cellar/opencv/3.4.2/include/opencv2"
 export CGO_CXXFLAGS="--std=c++1z -stdlib=libc++"

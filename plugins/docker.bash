@@ -19,3 +19,7 @@ alias dps='docker-compose ps'
 alias dcrm='docker-compose rm'
 alias dcr='docker-compose restart'
 alias dcfr='docker-compose up --build --force-recreate'
+
+dbuild() {
+  docker build -t ${1} -f ${2} .
+}

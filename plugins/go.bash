@@ -7,5 +7,5 @@ if ! [ -x "$(command -v go)" ]; then
 fi
 
 # make sure $GOPATH is set prior to adding this plug-in
-export PATH=$PATH:$(go env GOPATH)bin
+export PATH=$PATH:$(go env GOPATH)/bin
 alias gtest='go test ./...'

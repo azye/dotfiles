@@ -1,7 +1,9 @@
 # kubernetes
 
 # sources kubectl autocompletion
-source <(kubectl completion bash)
+# source <(kubectl completion bash)
+
+DK="deployments/kubernetes"
 
 # check kubectl install
 if ! [ -x "$(command -v kubectl)" ]; then
@@ -10,6 +12,7 @@ if ! [ -x "$(command -v kubectl)" ]; then
 fi
 
 alias k='kubectl'
+alias kl='kubectl logs'
 alias kg='kubectl get'
 alias kgp='kubectl get pod'
 alias kgs='kubectl get service'

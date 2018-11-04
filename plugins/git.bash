@@ -8,3 +8,5 @@ alias gstatus='git status'
 alias gcheckout='git checkout'
 alias greset='git reset'
 alias gstash='git stash'
+
+git config --global core.editor "vim"

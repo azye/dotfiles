@@ -1,5 +1,7 @@
 # macOS specific configurations
 
+alias resource='source ~/.bash_profile'
+
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 alias cat='bat'
 alias maczip='zip -r output.zip . -x ".*" -x "__MACOSX"'

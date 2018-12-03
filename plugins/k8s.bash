@@ -24,8 +24,6 @@ if ! [ -x "$(command -v minikube)" ]; then
 fi
 
 alias mk='minikube'
-alias mkdash='minikube dashboard' # opens up k8s dashboard
+alias mkdash='minikube dashboard &> /dev/null &' # opens up k8s dashboard in the background
 alias mks='minikube service --https' # expects service name
 alias mkenv='eval $(minikube docker-env)' # loads the minikube docker environment
-alias mkinit='minikube start --mount-string=".:/tally-core" --mount --network-plugin=cni --vm-driver="hyperkit" --bootstrapper=kubeadm --kubernetes-version=v1.11.0'
-alias mkdel='minikube delete'

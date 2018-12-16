@@ -11,7 +11,7 @@ alias configs='subl ${CONFIG_PATH}'
 alias path='echo -e ${PATH//:/\\n}'
 
 # bash $PS1
-export PS1="\u { \@ } \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]\n\$ "
+export PS1="\e[92m\@ \u \[\033[94m\]\w\[\033[91m\]\$(parse_git_branch)\[\033[00m\]\n\$ "
 
 # gets the git branch of current directory
 parse_git_branch() {

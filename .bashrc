@@ -46,7 +46,7 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-git config --global core.editor "vim"
+git config --global core.editor "${EDITOR}"
 git config --global user.email "${EMAIL}"
 git config --global user.name "${IRL_NAME}"
 
@@ -71,6 +71,7 @@ HISTCONTROL=ignoreboth
 echo "\$WORKSPACE: ${WORKSPACE}"
 echo "\$GOPATH:    ${GOPATH}"
 echo "\$PATH:      ${PATH}"
+
 if [ -x "$(command -v neofetch)" ]; then
 	printf '\n'
 	neofetch

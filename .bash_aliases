@@ -1,17 +1,7 @@
-########################################
-# .bashrc
-# @alexzye
-# 
-# All my .bashrc resources
-########################################
 
 # Load OS dependent variables
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-	C=/mnt/c
-	export WORKSPACE=${C}/Users/alexz/workspace
 	alias subl='/mnt/c/Program\ Files/Sublime\ Text\ 3/subl.exe'
-elif [[ "$OSTYPE" == "darwin" ]]; then
-	WORKSPACE=/Volumes/CaseSensitive
 fi
 
 alias h="history | grep "

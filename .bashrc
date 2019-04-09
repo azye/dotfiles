@@ -1,14 +1,14 @@
-# Load bash alias file
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # Load in bash_env
 if [ -f ~/.bash_env ]; then
-    . ~/.bash_env
+	. ~/.bash_env
 fi
 
-#
+# Load bash alias file
+if [ -f ~/.bash_aliases ]; then
+	. ~/.bash_aliases
+fi
+
+
 # $PS1 configurations settings
 #
 # example: 08:19 PM alex /mnt/c/Users/alexz/workspace/dotfiles (master)
@@ -25,7 +25,7 @@ export PS1="${GREEN}\@ \u ${BLUE}\w${RED}\$(parse_git_branch)\n${WHITE}\$ "
 
 # gets name of current git repository
 parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
 # set default editor

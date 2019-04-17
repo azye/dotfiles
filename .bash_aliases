@@ -2,6 +2,10 @@
 # Load OS dependent variables
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	alias subl='/mnt/c/Program\ Files/Sublime\ Text\ 3/subl.exe'
+	alias ls='ls -lah --color=auto'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+	alias ls='ls -lahG'
 fi
 
 alias h="history | grep "
@@ -23,11 +27,13 @@ alias h='history'
 alias cd..='cd ..'
 alias err='echo $?' # get last error code
 alias path='echo -e ${PATH//:/\\n}'
-alias ls='ls -lah --color=auto'
 alias grep='grep --color=auto'
 
 if [ -x "$(command -v docker)" ]; then
-	alias d='docker'
+	alias d='docker'	
+fi
+
+if [ -x "$(command -v docker-compose)" ]; then
 	alias dc='docker-compose'
 	alias dps='docker-compose ps'
 	alias dcrm='docker-compose rm'

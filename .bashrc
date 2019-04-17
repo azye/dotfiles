@@ -62,6 +62,7 @@ fi
 #
 # OS specific config settings
 #
+echo "logging in with ${OSTYPE} settings"
 
 # if linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -78,12 +79,10 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	# Added by n-install (see http://git.io/n-install-repo).
 	export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 # else if macOS
-elif [[ "$OSTYPE" == "darwin" ]]; then
-	echo "logging in with darwin settings"
-	WORKSPACE=/Volumes/CaseSensitive
+elif [[ "$OSTYPE" == "darwin"* ]]; then
 
 	[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-	
+
 	test -e "${PLUGIN_PATH}/iterm2.bash" && source "${PLUGIN_PATH}/iterm2.bash"
 	defaults write com.dteoh.SlowQuitApps delay -int 500 # slow quit apps delay
 else

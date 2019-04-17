@@ -11,21 +11,30 @@ fi
 
 # $PS1 configurations settings
 #
-# example: 08:19 PM alex /mnt/c/Users/alexz/workspace/dotfiles (master)
+# example: 09:28 PM [alex] ~/.dotfiles (master) sudo
 #
 BLUE='\[\033[94m\]'
 GREEN='\[\033[0;32m\]'
-RED='\[\033[91m\]'
+RED='\[\033[0;31m\]'
 WHITE='\[\033[00m\]'
+YELLOW='\[\033[0;33m\]'
+BLACK='\[\033[0;30m\]'
+PURPLE='\[\033[0;35m\]'
+CYAN='\[\033[0;36m\]'
+WHITE='\[\033[0;37m\]'
 
 # \@ time HH:MM AM/PM
 # \u user
 # \w current directory
-export PS1="${GREEN}\@ \u ${BLUE}\w${RED}\$(parse_git_branch)\n${WHITE}\$ "
+export PS1="${GREEN}\@ [\u] ${BLUE}\w ${YELLOW}\$(parse_git_branch) ${RED}\$(am_sudo_session) \n${WHITE}\$ "
 
 # gets name of current git repository
 parse_git_branch() {
-	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+am_sudo_session() {
+	if [ $(sudo -n uptime 2>&1|grep "load"|wc -l) -gt 0 ]; then echo "sudo "; fi
 }
 
 # set default editor
@@ -64,7 +73,6 @@ fi
 #
 echo "logging in with ${OSTYPE} settings"
 
-# if linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	echo "logging in with linux-gnu settings"
 
@@ -102,4 +110,4 @@ if [ -x "$(command -v neofetch)" ]; then
 fi
 printf '\n'
 
-cd $WORKSPACE
+# cd $WORKSPACE

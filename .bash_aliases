@@ -8,26 +8,35 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 	alias ls='ls -lahG'
 fi
 
-alias h="history | grep "
-alias f="find . | grep "
+
+alias q='exit'
+alias c='clear'
+alias h='history'
+alias g='grep'
+
+alias resource='source ~/.bashrc'
+alias ws='cd ${WORKSPACE}'
+alias py='python'
+alias py2='python2'
+alias py3='python3'
+alias err='echo $?' # get last error code
+alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
+
+#
+# Symbol aliases
+#
+alias ~='cd ~'
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias resource='source ~/.bashrc'
-alias q='exit'
-alias ~='cd ${HOME}'
-alias ws='cd ${WORKSPACE}'
-alias ~='cd ~'
-alias c='clear'
-alias ..='cd ..'
-alias py='python'
-alias h='history'
+
+#
+# common typos
+#
 alias cd..='cd ..'
-alias err='echo $?' # get last error code
-alias path='echo -e ${PATH//:/\\n}'
-alias grep='grep --color=auto'
+
 
 if [ -x "$(command -v docker)" ]; then
 	alias d='docker'	

@@ -74,8 +74,6 @@ fi
 echo "logging in with ${OSTYPE} settings"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-	echo "logging in with linux-gnu settings"
-
 	export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 	export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 	export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/isl@0.18/lib"

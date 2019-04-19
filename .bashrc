@@ -86,7 +86,6 @@ fi
 # Golang config settings
 #
 if [ -x "$(command -v go)" ]; then
-	echo "hi"
 	export GOPATH=${WORKSPACE}/go
 
 	# if Go installed and $GOPATH does not exist, create default $GOPATH in workspace

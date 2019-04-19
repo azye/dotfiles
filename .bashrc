@@ -56,19 +56,6 @@ git config --global user.email "${EMAIL}"
 git config --global user.name "${IRL_NAME}"
 
 #
-# Golang config settings
-#
-if [ -x "$(command -v go)" ]; then
-	export GOPATH=${WORKSPACE}/go
-
-	# if Go installed and $GOPATH does not exist, create default $GOPATH in workspace
-	if ! [ -d "$GOPATH" ]; then
-		echo "Configured \$GOPATH does not exists. Creating directory $GOPATH"
-		mkdir -p $GOPATH
-	fi
-fi
-
-#
 # OS specific config settings
 #
 echo "logging in with ${OSTYPE} settings"
@@ -93,6 +80,20 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 	defaults write com.dteoh.SlowQuitApps delay -int 500 # slow quit apps delay
 else
 	echo "uhhh I'm not sure what this is"
+fi
+
+#
+# Golang config settings
+#
+if [ -x "$(command -v go)" ]; then
+	echo "hi"
+	export GOPATH=${WORKSPACE}/go
+
+	# if Go installed and $GOPATH does not exist, create default $GOPATH in workspace
+	if ! [ -d "$GOPATH" ]; then
+		echo "Configured \$GOPATH does not exists. Creating directory $GOPATH"
+		mkdir -p $GOPATH
+	fi
 fi
 
 #

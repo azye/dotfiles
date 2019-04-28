@@ -101,11 +101,6 @@ fi
 echo "\$WORKSPACE: ${WORKSPACE}"
 echo "\$GOPATH:    ${GOPATH}"
 echo "\$PATH:      ${PATH}"
-
-if [ -x "$(command -v neofetch)" ]; then
-	printf '\n'
-	neofetch
-fi
 printf '\n'
 
 # cd $WORKSPACE

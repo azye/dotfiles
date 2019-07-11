@@ -54,6 +54,10 @@ export HISTCONTROL=ignoreboth
 git config --global core.editor "${EDITOR}"
 git config --global user.email "${EMAIL}"
 git config --global user.name "${IRL_NAME}"
+# source git autocomplete
+if [ -f ~/.git-completion.bash ]; then
+	. ~/.git-completion.bash
+fi
 
 #
 # OS specific config settings

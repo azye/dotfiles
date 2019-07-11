@@ -57,6 +57,7 @@ if [ -x "$(command -v kubectl)" ]; then
 	alias kg='kubectl get'
 	alias kgp='kubectl get pod'
 	alias kgs='kubectl get service'
+	. <(kubectl completion bash) # sources kubectl autocomplete
 fi
 
 # checks for minikube install

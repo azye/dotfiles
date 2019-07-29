@@ -64,6 +64,7 @@ fi
 #
 echo "logging in with ${OSTYPE} settings"
 
+# this is for wsl linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 	export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
@@ -71,8 +72,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/isl@0.18/include"
 	
 	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-
-	export PATH=$(/usr/bin/printenv PATH | /usr/bin/perl -ne 'print join(":", grep { !/\/mnt\/[a-z]/ } split(/:/));')
+	# export PATH=$(/usr/bin/printenv PATH | /usr/bin/perl -ne 'print join(":", grep { !/\/mnt\/[a-z]/ } split(/:/));')
 	# Added by n-install (see http://git.io/n-install-repo).
 	export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 # else if macOS

@@ -92,8 +92,11 @@ if [[ -x "$(command -v go)" ]]; then
 	fi
 fi
 
-# sources kubectl autocomplete
-. <(kubectl completion bash)
+if [[ -x "$(command -v kubectl)" ]]; then
+	# sources kubectl autocomplete
+	. <(kubectl completion bash)
+fi
+
 
 tarc() {
 	tar -czf "$1".tgz "$1"

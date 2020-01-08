@@ -7,7 +7,7 @@ DOT_FILES=(".bashrc" ".bash_aliases" ".vimrc" ".git_completion")
 for file in "${DOT_FILES[@]}"; 
 do
 	if test -f ~/"${file}"; then
-		unlink ~/"${file}"
+		rm ~/"${file}"
 	fi
 
 	ln -s "${CONFIG_PATH}"/"${file}" ~/"${file}"

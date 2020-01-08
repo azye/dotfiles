@@ -1,3 +1,5 @@
+printf "\nLogging into: ${OSTYPE}\n"
+
 # Load in bash_env
 if [[ -f ~/.bash_env ]]; then
 	. ~/.bash_env
@@ -6,6 +8,11 @@ fi
 # Load bash alias file
 if [[ -f ~/.bash_aliases ]]; then
 	. ~/.bash_aliases
+fi
+
+# Load git autocomplete
+if [[ -f ~/.git_completion ]]; then
+	. ~/.git_completion
 fi
 
 # $PS1 configurations settings
@@ -49,18 +56,12 @@ export HISTCONTROL=ignoreboth
 git config --global core.editor "${EDITOR}"
 git config --global user.email "${EMAIL}"
 git config --global user.name "${IRL_NAME}"
-# source git autocomplete
-if [[ -f ~/.git-completion.bash ]]; then
-	. ~/.git-completion.bash
-fi
 
 #
 # OS specific config settings
 #
-echo "logging in with ${OSTYPE} settings"
-
-# this is for wsl linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
+	# this is for wsl linux
 	export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 	export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 	export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/isl@0.18/lib"
@@ -70,11 +71,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	# export PATH=$(/usr/bin/printenv PATH | /usr/bin/perl -ne 'print join(":", grep { !/\/mnt\/[a-z]/ } split(/:/));')
 	# Added by n-install (see http://git.io/n-install-repo).
 	export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
-# else if macOS
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+	# else if macOS
+
 	[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
 	test -e "~/.iterm2_shell_integration.bash" && source "~/.iterm2_shell_integration.bash"
-	defaults write com.dteoh.SlowQuitApps delay -int 500 # slow quit apps delay
 else
 	echo "uhhh I'm not sure what this is"
 fi
@@ -97,17 +98,12 @@ if [[ -x "$(command -v kubectl)" ]]; then
 	. <(kubectl completion bash)
 fi
 
-
-tarc() {
-	tar -czf "$1".tgz "$1"
-}
-
 #
 # Print data
 #
-echo "\$WORKSPACE: ${WORKSPACE}"
-echo "\$GOPATH:    ${GOPATH}"
-echo "\$PATH:      ${PATH}"
-printf '\n'
+# echo "\$WORKSPACE: ${WORKSPACE}"
+# echo "\$GOPATH:    ${GOPATH}"
+# echo "\$PATH:      ${PATH}"
+# printf '\n'
 
-cd $WORKSPACE
+# cd $WORKSPACE

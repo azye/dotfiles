@@ -12,3 +12,5 @@ do
 
 	ln -s "${CONFIG_PATH}"/"${file}" ~/"${file}"
 done
+
+. ~/.bashrc

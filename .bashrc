@@ -1,4 +1,4 @@
-printf "\nLogging into: ${OSTYPE}\n"
+printf "Logging into: ${OSTYPE}\n"
 
 # Load in bash_env
 if [[ -f ~/.bash_env ]]; then

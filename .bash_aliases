@@ -21,12 +21,10 @@ alias .....="cd ../../../.."
 # common typos
 #
 alias cd..='cd ..'
-
 alias :q='exit'
 alias c='clear'
 alias h='history'
 alias resource='source ~/.bashrc'
-alias ws='cd ${WORKSPACE}'
 alias py='python'
 alias py2='python2'
 alias py3='python3'

@@ -17,7 +17,7 @@ fi
 
 # $PS1 configurations settings
 #
-# example: 09:28 PM [alex] ~/.dotfiles (master) sudo
+# example: 09:28 PM [alex] ~/.dotfiles (master)
 #
 BLUE='\[\033[94m\]'
 GREEN='\[\033[0;32m\]'
@@ -51,13 +51,6 @@ export HISTFILESIZE=6000
 export HISTCONTROL=ignoreboth
 
 #
-# Git config settings
-#
-git config --global core.editor "${EDITOR}"
-git config --global user.email "${EMAIL}"
-git config --global user.name "${IRL_NAME}"
-
-#
 # OS specific config settings
 #
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -68,42 +61,35 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/isl@0.18/include"
 
 	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-	# export PATH=$(/usr/bin/printenv PATH | /usr/bin/perl -ne 'print join(":", grep { !/\/mnt\/[a-z]/ } split(/:/));')
-	# Added by n-install (see http://git.io/n-install-repo).
-	export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 	# else if macOS
 
 	[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
-	test -e "~/.iterm2_shell_integration.bash" && source "~/.iterm2_shell_integration.bash"
 else
 	echo "uhhh I'm not sure what this is"
 fi
 
-#
-# Golang config settings
-#
+# if Go installed and $GOPATH does not exist, create default $GOPATH in workspace
 if [[ -x "$(command -v go)" ]]; then
-	export GOPATH=${WORKSPACE}/go
-
-	# if Go installed and $GOPATH does not exist, create default $GOPATH in workspace
-	if ! [[ -d "${GOPATH}" ]]; then
-		echo "Configured \$GOPATH does not exists. Creating directory $GOPATH"
-		mkdir -p ${GOPATH}
+	# if GOPATH is initialized, and GOPATH doesnt exist
+	if [[ ! -z "${GOPATH}" ]] && [[ ! -d "${GOPATH}" ]]; then
+		echo "Configured \$GOPATH does not exists: $GOPATH"
+	elif [[ -z "${GOPATH}" ]]; then
+		echo "No \$GOPATH set"
+	else
+		# add GOPATH bin to PATH
+		export PATH="$PATH:${GOPATH}/bin"
 	fi
 fi
 
-if [[ -x "$(command -v kubectl)" ]]; then
-	# sources kubectl autocomplete
-	. <(kubectl completion bash)
+# kubectl bash completion
+[[ -x "$(command -v kubectl)" ]] && . <(kubectl completion bash)
+
+# enable pyenv
+[[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init -)"
+
+# for fun
+if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 
+then
+	fortune | cowsay | lolcat
 fi
-
-#
-# Print data
-#
-# echo "\$WORKSPACE: ${WORKSPACE}"
-# echo "\$GOPATH:    ${GOPATH}"
-# echo "\$PATH:      ${PATH}"
-# printf '\n'
-
-# cd $WORKSPACE

@@ -29,9 +29,9 @@ PURPLE='\[\033[0;35m\]'
 CYAN='\[\033[0;36m\]'
 WHITE='\[\033[0;37m\]'
 
-# \@ time HH:MM AM/PM
-# \u user
-# \w current directory
+# # \@ time HH:MM AM/PM
+# # \u user
+# # \w current directory
 export PS1="${GREEN}\@ [\u] ${BLUE}\w ${YELLOW}\$(parse_git_branch) \n${WHITE}\$ "
 
 # gets name of current git repository
@@ -54,16 +54,9 @@ export HISTCONTROL=ignoreboth
 # OS specific config settings
 #
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-	# this is for wsl linux
-	export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
-	export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
-	export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/isl@0.18/lib"
-	export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/isl@0.18/include"
-
 	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 	# else if macOS
-
 	[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
 else
 	echo "uhhh I'm not sure what this is"

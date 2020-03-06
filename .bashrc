@@ -81,6 +81,8 @@ fi
 # enable pyenv
 [[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init -)"
 
+[[ -x "$(command -v docker)" ]] && export DOCKER_BUILDKIT=1
+
 # for fun
 if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 
 then

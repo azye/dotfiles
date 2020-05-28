@@ -1,3 +1,9 @@
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
 printf "Logging into: ${OSTYPE}\n"
 
 # Load in bash_env
@@ -29,6 +35,37 @@ PURPLE='\[\033[0;35m\]'
 CYAN='\[\033[0;36m\]'
 WHITE='\[\033[0;37m\]'
 
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
 # # \@ time HH:MM AM/PM
 # # \u user
 # # \w current directory
@@ -49,6 +86,13 @@ export HISTSIZE=5000
 export HISTFILESIZE=6000
 # don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 #
 # OS specific config settings
@@ -84,7 +128,7 @@ fi
 [[ -x "$(command -v docker)" ]] && export DOCKER_BUILDKIT=1
 
 # for fun
-if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 
-then
-	fortune | cowsay | lolcat
-fi
+# if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 
+# then
+# 	fortune | cowsay | lolcat
+# fi

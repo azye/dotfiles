@@ -4,8 +4,6 @@ case $- in
       *) return;;
 esac
 
-printf "Logging into: ${OSTYPE}\n"
-
 # Load in bash_env
 if [[ -f ~/.bash_env ]]; then
 	. ~/.bash_env
@@ -46,7 +44,7 @@ shopt -s checkwinsize
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls -lah --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
 
@@ -126,6 +124,11 @@ fi
 [[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init -)"
 
 [[ -x "$(command -v docker)" ]] && export DOCKER_BUILDKIT=1
+
+if [[ -x "$(command -v fortune)" ]]; then
+	fortune
+	printf "\n"
+fi
 
 # for fun
 # if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 

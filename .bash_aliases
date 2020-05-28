@@ -21,7 +21,7 @@ alias .....="cd ../../../.."
 # common typos
 #
 alias cd..='cd ..'
-alias :q='exit'
+alias q='exit'
 alias c='clear'
 alias h='history'
 alias resource='source ~/.bashrc'

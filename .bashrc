@@ -130,6 +130,8 @@ if [[ -x "$(command -v fortune)" ]]; then
 	printf "\n"
 fi
 
+cd ~
+
 # for fun
 # if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 
 # then

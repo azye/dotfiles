@@ -85,6 +85,10 @@ export HISTFILESIZE=6000
 # don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
 
+export PYENV_ROOT=~/.pyenv
+
+export PIPENV_PYTHON=$PYENV_ROOT/shims/python
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -126,6 +130,7 @@ fi
 [[ -x "$(command -v docker)" ]] && export DOCKER_BUILDKIT=1
 
 if [[ -x "$(command -v fortune)" ]]; then
+	printf "\n"
 	fortune
 	printf "\n"
 fi

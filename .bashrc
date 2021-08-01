@@ -5,19 +5,10 @@ case $- in
 esac
 
 # Load in bash_env
-if [[ -f ~/.bash_env ]]; then
-	. ~/.bash_env
-fi
-
-# Load bash alias file
-if [[ -f ~/.bash_aliases ]]; then
-	. ~/.bash_aliases
-fi
-
-# Load git autocomplete
-if [[ -f ~/.git_completion ]]; then
-	. ~/.git_completion
-fi
+[ -f ~/.bash_env ] && . ~/.bash_env
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+[ -f ~/.git_completion ] && . ~/.git_completion
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash
 
 # $PS1 configurations settings
 #
@@ -89,6 +80,11 @@ export PYENV_ROOT=~/.pyenv
 
 export PIPENV_PYTHON=$PYENV_ROOT/shims/python
 
+export DOCKER_BUILDKIT=1
+export YELP_API_KEY="pIxVPxI9ZmtRr32WgaXNrKYirVDHzfjtVkGwVD0XpSXwM6gxSWiiefJO4FA9bJeQBXT3a9UFYwuBg1Op3_NckMAIBTwXdTUJrESItRRMbbMm978-3as0AAG4XulBXnYx"
+export LANG=C
+
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -104,8 +100,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 	# else if macOS
 	[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
-else
-	echo "uhhh I'm not sure what this is"
 fi
 
 # if Go installed and $GOPATH does not exist, create default $GOPATH in workspace
@@ -122,23 +116,13 @@ if [[ -x "$(command -v go)" ]]; then
 fi
 
 # kubectl bash completion
-[[ -x "$(command -v kubectl)" ]] && . <(kubectl completion bash)
-
+[ -x "$(command -v kubectl)" ] && . <(kubectl completion bash)
 # enable pyenv
 [[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init -)"
 
-[[ -x "$(command -v docker)" ]] && export DOCKER_BUILDKIT=1
-
-if [[ -x "$(command -v fortune)" ]]; then
-	printf "\n"
-	fortune
-	printf "\n"
+# run this at the very end. i don't want to replace the entire shell with tmux,
+# just run it at the beginning.
+# only run if not already in a tmux session
+if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
+	tmux
 fi
-
-cd ~
-
-# for fun
-# if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 
-# then
-# 	fortune | cowsay | lolcat
-# fi

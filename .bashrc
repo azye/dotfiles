@@ -5,19 +5,14 @@ case $- in
 esac
 
 # Load in bash_env
-if [[ -f ~/.bash_env ]]; then
-	. ~/.bash_env
-fi
+[ -f ~/.bash_env ] && . ~/.bash_env
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+[ -f ~/.git_completion ] && . ~/.git_completion
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -x "$(command -v kubectl)" ] && . <(kubectl completion bash) # kubectl bash completion
+[ -x "$(command -v pyenv)" ] && eval "$(pyenv init -)" # enable pyenv
 
-# Load bash alias file
-if [[ -f ~/.bash_aliases ]]; then
-	. ~/.bash_aliases
-fi
-
-# Load git autocomplete
-if [[ -f ~/.git_completion ]]; then
-	. ~/.git_completion
-fi
 
 # $PS1 configurations settings
 #
@@ -38,20 +33,8 @@ WHITE='\[\033[0;37m\]'
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -lah --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -74,38 +57,26 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-# set default editor
-export EDITOR=vim
-# add confirmation for clobbering files
-set -o noclobber
-# max number of lines stored in memory by terminal session
-export HISTSIZE=5000
-# max number of lines allowed to be stored on history file
-export HISTFILESIZE=6000
-# don't put duplicate lines or lines starting with space in the history.
-export HISTCONTROL=ignoreboth
-
+set -o noclobber # add confirmation for clobbering files
+export EDITOR=vim # set default editor
+export HISTSIZE=5000 # max number of lines stored in memory by terminal session
+export HISTFILESIZE=6000 # max number of lines allowed to be stored on history file
+export HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
 export PYENV_ROOT=~/.pyenv
-
 export PIPENV_PYTHON=$PYENV_ROOT/shims/python
+export DOCKER_BUILDKIT=1
+export LANG=C
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
 
 #
 # OS specific config settings
 #
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-	# else if macOS
-	[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
-else
-	echo "uhhh I'm not sure what this is"
+# elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # if Go installed and $GOPATH does not exist, create default $GOPATH in workspace
@@ -121,24 +92,9 @@ if [[ -x "$(command -v go)" ]]; then
 	fi
 fi
 
-# kubectl bash completion
-[[ -x "$(command -v kubectl)" ]] && . <(kubectl completion bash)
-
-# enable pyenv
-[[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init -)"
-
-[[ -x "$(command -v docker)" ]] && export DOCKER_BUILDKIT=1
-
-if [[ -x "$(command -v fortune)" ]]; then
-	printf "\n"
-	fortune
-	printf "\n"
+# run this at the very end. i don't want to replace the entire shell with tmux,
+# just run it at the beginning.
+# only run if not already in a tmux session
+if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
+	tmux
 fi
-
-cd ~
-
-# for fun
-# if [[ -x "$(command -v fortune)" ]] && [[ -x "$(command -v cowsay)" ]] && [[ -x "$(command -v lolcat)" ]]; 
-# then
-# 	fortune | cowsay | lolcat
-# fi

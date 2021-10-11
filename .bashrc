@@ -9,6 +9,9 @@ esac
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 [ -f ~/.git_completion ] && . ~/.git_completion
 [ -f ~/.fzf.bash ] && . ~/.fzf.bash
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -x "$(command -v kubectl)" ] && . <(kubectl completion bash) # kubectl bash completion
+[ -x "$(command -v pyenv)" ] && eval "$(pyenv init -)" # enable pyenv
 
 # $PS1 configurations settings
 #
@@ -29,20 +32,8 @@ WHITE='\[\033[0;37m\]'
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -lah --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -65,20 +56,15 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-# set default editor
-export EDITOR=vim
-# add confirmation for clobbering files
-set -o noclobber
-# max number of lines stored in memory by terminal session
-export HISTSIZE=5000
-# max number of lines allowed to be stored on history file
-export HISTFILESIZE=6000
-# don't put duplicate lines or lines starting with space in the history.
-export HISTCONTROL=ignoreboth
-
+set -o noclobber # add confirmation for clobbering files
+export EDITOR=vim # set default editor
+export HISTSIZE=5000 # max number of lines stored in memory by terminal session
+export HISTFILESIZE=6000 # max number of lines allowed to be stored on history file
+export HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
 export PYENV_ROOT=~/.pyenv
-
 export PIPENV_PYTHON=$PYENV_ROOT/shims/python
+export DOCKER_BUILDKIT=1
+export LANG=C
 
 export DOCKER_BUILDKIT=1
 export YELP_API_KEY="pIxVPxI9ZmtRr32WgaXNrKYirVDHzfjtVkGwVD0XpSXwM6gxSWiiefJO4FA9bJeQBXT3a9UFYwuBg1Op3_NckMAIBTwXdTUJrESItRRMbbMm978-3as0AAG4XulBXnYx"
@@ -88,9 +74,6 @@ export LANG=C
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
 
 #
 # OS specific config settings
@@ -114,12 +97,6 @@ if [[ -x "$(command -v go)" ]]; then
 		export PATH="$PATH:${GOPATH}/bin"
 	fi
 fi
-
-# kubectl bash completion
-[ -x "$(command -v kubectl)" ] && . <(kubectl completion bash)
-# enable pyenv
-[[ -x "$(command -v pyenv)" ]] && eval "$(pyenv init -)"
-
 # run this at the very end. i don't want to replace the entire shell with tmux,
 # just run it at the beginning.
 # only run if not already in a tmux session

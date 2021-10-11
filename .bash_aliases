@@ -8,6 +8,18 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 	alias ls='ls -lahG'
 fi
 
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls -lah --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
 #
 # Symbol aliases
 #
@@ -30,7 +42,6 @@ alias py2='python2'
 alias py3='python3'
 alias err='echo $?' # get last error code
 alias path='echo -e ${PATH//:/\\n}'
-alias grep='grep --color=auto'
 alias g='git'
 alias gs='git status'
 alias d='docker'

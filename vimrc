@@ -27,4 +27,6 @@ noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 
-set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
+call plug#begin()
+  Plug 'preservim/nerdtree'
+call plug#end()

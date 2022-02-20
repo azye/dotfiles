@@ -1,4 +1,14 @@
-colorscheme slate
+call plug#begin()
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'preservim/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'morhetz/gruvbox'
+call plug#end()
+
+" colorscheme slate
 syntax on
 set number
 filetype plugin indent on
@@ -46,6 +56,9 @@ nnoremap <C-g> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
-call plug#begin()
-  Plug 'preservim/nerdtree'
-call plug#end()
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+autocmd vimenter * ++nested colorscheme gruvbox

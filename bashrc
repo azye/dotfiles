@@ -68,3 +68,4 @@ else
         fi
 fi
 
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash

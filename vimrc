@@ -11,6 +11,7 @@ call plug#end()
 " colorscheme slate
 syntax on
 set number
+set number relativenumber
 filetype plugin indent on
 set autoread
 set ruler
@@ -24,11 +25,9 @@ set nobackup
 set nowb
 set noswapfile
 set colorcolumn=80
-set number relativenumber
 set nu rnu
 set ai 
 set si
-set wrap
 set hlsearch 
 set ignorecase
 set incsearch
@@ -56,6 +55,7 @@ nnoremap <C-g> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
+nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>

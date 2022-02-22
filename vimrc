@@ -7,6 +7,7 @@ call plug#begin()
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'morhetz/gruvbox'
+  Plug 'editorconfig/editorconfig-vim'
   Plug 'wbthomason/packer.nvim'
   Plug 'neovim/nvim-lspconfig'
 call plug#end()
@@ -33,6 +34,11 @@ set si
 set hlsearch 
 set ignorecase
 set incsearch
+set clipboard=unnamed
+" shows whitespace
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+set list
+
 noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>

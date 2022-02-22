@@ -23,7 +23,7 @@ parse_git_branch() {
 }
 
 set -o noclobber # add confirmation for clobbering files
-export EDITOR=vim # set default editor
+export EDITOR=nvim # set default editor
 export HISTSIZE=5000 # max number of lines stored in memory by terminal session
 export HISTFILESIZE=6000 # max number of lines allowed to be stored on history file
 export HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.

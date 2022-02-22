@@ -1,10 +1,12 @@
 call plug#begin()
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'kyazdani42/nvim-web-devicons'
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'morhetz/gruvbox'
 call plug#end()
 
@@ -54,6 +56,8 @@ nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-g> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+let NERDTreeShowHidden=1
+
 
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>

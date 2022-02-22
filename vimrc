@@ -5,6 +5,7 @@ call plug#begin()
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'morhetz/gruvbox'
   Plug 'editorconfig/editorconfig-vim'
@@ -133,3 +134,12 @@ highlight NvimTreeFolderIcon guibg=blue
 
 lua require'nvim-tree'.setup {}
 
+" fixes paste issue on telescope
+lua << EOF
+require('telescope').setup{
+       defaults = {
+               prompt_prefix=""
+       }
+
+}
+EOF

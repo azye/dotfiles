@@ -6,6 +6,7 @@ call plug#begin()
 	Plug 'preservim/nerdcommenter'
 	Plug 'kyazdani42/nvim-tree.lua'
 	Plug 'tpope/vim-fugitive'
+	Plug 'vimwiki/vimwiki'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
 	Plug 'vim-airline/vim-airline'
 	Plug 'nvim-lua/plenary.nvim'
@@ -104,6 +105,9 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 autocmd vimenter * ++nested colorscheme gruvbox
 
+" vimwiki configurations
+let g:vimwiki_markdown_link_ext = 1
+let g:vimwiki_list = [{'path': '~/notes/', 'syntax': 'markdown', 'ext': '.md'}]
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
 

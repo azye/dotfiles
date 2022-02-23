@@ -74,7 +74,7 @@ vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
 
-noremap <leader>w :bd<Cr>
+noremap <leader>x :bd<Cr>
 
 " makes Y copy from cursor to EOL
 nnoremap Y y$

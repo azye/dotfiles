@@ -1,5 +1,9 @@
+
+" Vim Plug plugins
 call plug#begin()
 	Plug 'kyazdani42/nvim-web-devicons'
+	Plug 'dense-analysis/ale'
+	Plug 'preservim/nerdcommenter'
 	Plug 'kyazdani42/nvim-tree.lua'
 	Plug 'tpope/vim-fugitive'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -7,7 +11,7 @@ call plug#begin()
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'nvim-telescope/telescope.nvim'
-	Plug 'tpope/vim-surround'
+	Plug 'airblade/vim-gitgutter'
 	Plug 'nvim-lua/popup.nvim'
 	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 	Plug 'morhetz/gruvbox'
@@ -15,15 +19,17 @@ call plug#begin()
 	Plug 'wbthomason/packer.nvim'
 	Plug 'neovim/nvim-lspconfig'
 call plug#end()
+
 " colorscheme slate
-syntax on
+syntax on " enable syntax highlighting
 filetype plugin indent on
+set smartindent
 set autoread
-set ruler
 set hid
 set ignorecase
+set shiftwidth=4 " sets tab to 4 spaces
 set tabstop=4
-set mouse=a
+set mouse=a " allots mouse on vim >:(
 set smartcase
 set lazyredraw 
 set encoding=utf8
@@ -31,6 +37,7 @@ set nobackup
 set nowb
 set noswapfile
 set colorcolumn=80
+set ruler
 set nu rnu " enable line numbers and relative line numbers
 set ai
 set si
@@ -38,14 +45,36 @@ set hlsearch
 set ignorecase
 set incsearch
 set clipboard=unnamed
-" shows whitespace
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
-set list
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣ " shows all whitespace
+set list " show all whitespace
 
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+" NO ARROW KEYS ANYWHERE!!! >:)
+" in Command Mode
+cnoremap <Down> <Nop>
+cnoremap <Left> <Nop>
+cnoremap <Right> <Nop>
+cnoremap <Up> <Nop>
+
+" in Insert Mode
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+
+" in Normal Mode
+nnoremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up> <Nop>
+
+" in Visual Mode
+vnoremap <Down> <Nop>
+vnoremap <Left> <Nop>
+vnoremap <Right> <Nop>
+vnoremap <Up> <Nop>
+
+
+noremap <leader>w :bd<Cr>
 
 " makes Y copy from cursor to EOL
 nnoremap Y y$
@@ -74,6 +103,33 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 autocmd vimenter * ++nested colorscheme gruvbox
+
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
 
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
@@ -144,3 +200,4 @@ require('telescope').setup{
 	}
 }
 EOF
+

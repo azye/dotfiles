@@ -1,26 +1,28 @@
 call plug#begin()
-  Plug 'kyazdani42/nvim-web-devicons'
-  Plug 'kyazdani42/nvim-tree.lua'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'nvim-telescope/telescope.nvim'
-  Plug 'nvim-lua/popup.nvim'
-  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-  Plug 'morhetz/gruvbox'
-  Plug 'editorconfig/editorconfig-vim'
-  Plug 'wbthomason/packer.nvim'
-  Plug 'neovim/nvim-lspconfig'
+	Plug 'kyazdani42/nvim-web-devicons'
+	Plug 'kyazdani42/nvim-tree.lua'
+	Plug 'tpope/vim-fugitive'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+	Plug 'vim-airline/vim-airline'
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	Plug 'nvim-telescope/telescope.nvim'
+	Plug 'tpope/vim-surround'
+	Plug 'nvim-lua/popup.nvim'
+	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+	Plug 'morhetz/gruvbox'
+	Plug 'editorconfig/editorconfig-vim'
+	Plug 'wbthomason/packer.nvim'
+	Plug 'neovim/nvim-lspconfig'
 call plug#end()
 " colorscheme slate
 syntax on
-set number
-set number relativenumber
 filetype plugin indent on
 set autoread
 set ruler
 set hid
 set ignorecase
+set tabstop=4
 set mouse=a
 set smartcase
 set lazyredraw 
@@ -29,10 +31,10 @@ set nobackup
 set nowb
 set noswapfile
 set colorcolumn=80
-set nu rnu
-set ai 
+set nu rnu " enable line numbers and relative line numbers
+set ai
 set si
-set hlsearch 
+set hlsearch
 set ignorecase
 set incsearch
 set clipboard=unnamed
@@ -137,9 +139,8 @@ lua require'nvim-tree'.setup {}
 " fixes paste issue on telescope
 lua << EOF
 require('telescope').setup{
-       defaults = {
-               prompt_prefix=""
-       }
-
+	defaults = {
+		prompt_prefix=""
+	}
 }
 EOF

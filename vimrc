@@ -4,6 +4,7 @@ call plug#begin()
 	Plug 'kyazdani42/nvim-web-devicons'
 	Plug 'dense-analysis/ale'
 	Plug 'preservim/nerdcommenter'
+	Plug 'majutsushi/tagbar'
 	Plug 'kyazdani42/nvim-tree.lua'
 	Plug 'tpope/vim-fugitive'
 	Plug 'vimwiki/vimwiki'
@@ -23,11 +24,11 @@ call plug#end()
 
 " colorscheme slate
 syntax on " enable syntax highlighting
-filetype plugin indent on
+filetype plugin indent on " follow language specific indentation rules
 set smartindent
 set autoread
-set hid
-set ignorecase
+set hidden " hide unsaved files in buffer when new file is open insead of closing
+set ignorecase " ignore case when searching
 set shiftwidth=4 " sets tab to 4 spaces
 set tabstop=4
 set mouse=a " allots mouse on vim >:(
@@ -40,22 +41,25 @@ set noswapfile
 set colorcolumn=80
 set ruler
 set nu rnu " enable line numbers and relative line numbers
-set ai
-set si
-set hlsearch
+" set ai " auto indent
+" set si " make auto indent smarter, but not necessary with plugin indent on
+set hlsearch " highlight search results
 set ignorecase
 set incsearch
 set clipboard=unnamed
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣ " shows all whitespace
+set nocompatible
 set list " show all whitespace
+set cursorline " highlight cursorline
+set showmatch " highlight parent/bracket/etc matching
 
 " NO ARROW KEYS ANYWHERE!!! >:)
 " in Command Mode
-cnoremap <Down> <Nop>
-cnoremap <Left> <Nop>
-cnoremap <Right> <Nop>
-cnoremap <Up> <Nop>
-
+" cnoremap <Down> <Nop>
+" cnoremap <Left> <Nop>
+" cnoremap <Right> <Nop>
+" cnoremap <Up> <Nop>
+"
 " in Insert Mode
 inoremap <Down> <Nop>
 inoremap <Left> <Nop>
@@ -74,7 +78,7 @@ vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
-
+" closes a window
 noremap <leader>x :bd<Cr>
 
 " makes Y copy from cursor to EOL
@@ -107,7 +111,8 @@ autocmd vimenter * ++nested colorscheme gruvbox
 
 " vimwiki configurations
 let g:vimwiki_markdown_link_ext = 1
-let g:vimwiki_list = [{'path': '~/notes/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/notes', 'syntax': 'markdown', 'ext': '.md'}]
+
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
 
@@ -195,13 +200,7 @@ set termguicolors " this variable must be enabled for colors to be applied prope
 highlight NvimTreeFolderIcon guibg=blue
 
 lua require'nvim-tree'.setup {}
+lua require('lspconfig/quick_lint_js').setup {}
 
-" fixes paste issue on telescope
-lua << EOF
-require('telescope').setup{
-	defaults = {
-		prompt_prefix=""
-	}
-}
-EOF
+nmap <F8> :TagbarToggle<CR>
 

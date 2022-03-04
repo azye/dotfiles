@@ -2,7 +2,6 @@
 " Vim Plug plugins
 call plug#begin()
 	Plug 'kyazdani42/nvim-web-devicons'
-	Plug 'dense-analysis/ale'
 	Plug 'preservim/nerdcommenter'
 	Plug 'majutsushi/tagbar'
 	Plug 'kyazdani42/nvim-tree.lua'
@@ -20,6 +19,20 @@ call plug#begin()
 	Plug 'editorconfig/editorconfig-vim'
 	Plug 'wbthomason/packer.nvim'
 	Plug 'neovim/nvim-lspconfig'
+	" main one
+	Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+	" 9000+ Snippets
+	Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+
+	" lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
+	" Need to **configure separately**
+
+	Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+	" - shell repl
+	" - nvim lua api
+	" - scientific calculator
+	" - comment banner
+	" - etc
 call plug#end()
 
 " colorscheme slate
@@ -79,7 +92,7 @@ vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
 " closes a window
-noremap <leader>x :bd<Cr>
+noremap <leader>x :q<Cr>
 
 " makes Y copy from cursor to EOL
 nnoremap Y y$
@@ -94,12 +107,14 @@ inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 
-" nerdtree mappings
-" nnoremap <leader>n :NERDTreeFocus<CR>
-" nnoremap <C-g> :NERDTree<CR>
-" nnoremap <C-t> :NERDTreeToggle<CR>
-" nnoremap <C-f> :NERDTreeFind<CR>
-" let NERDTreeShowHidden=1
+" adds k and j to jumplist
+nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
+nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
+
+" allows enter and shift enter to insert lines in normal mode
+nmap <S-CR> O<Esc>j
+nmap <CR> o<Esc>k
+
 
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -111,7 +126,7 @@ autocmd vimenter * ++nested colorscheme gruvbox
 
 " vimwiki configurations
 let g:vimwiki_markdown_link_ext = 1
-let g:vimwiki_list = [{'path': '~/notes', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '/mnt/c/Users/alexz/OneDrive/notes', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
@@ -199,8 +214,41 @@ set termguicolors " this variable must be enabled for colors to be applied prope
 " a list of groups can be found at `:help nvim_tree_highlight`
 highlight NvimTreeFolderIcon guibg=blue
 
-lua require'nvim-tree'.setup {}
-lua require('lspconfig/quick_lint_js').setup {}
-
 nmap <F8> :TagbarToggle<CR>
 
+
+lua require'nvim-tree'.setup {}
+
+
+lua << EOF
+
+local lsp = require "lspconfig"
+local coq = require "coq" -- add this
+lsp.pyright.setup(coq.lsp_ensure_capabilities{})
+lsp.quick_lint_js.setup(coq.lsp_ensure_capabilities{})
+
+require'nvim-treesitter.configs'.setup {
+  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "maintained",
+
+  -- Install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing
+  ignore_install = { "javascript" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- list of language that will be disabled
+    disable = { },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF

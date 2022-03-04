@@ -115,6 +115,7 @@ nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
 nmap <S-CR> O<Esc>j
 nmap <CR> o<Esc>k
 
+autocmd BufEnter *.yaml.tmpl :setlocal filetype=yaml
 
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -226,6 +227,24 @@ local lsp = require "lspconfig"
 local coq = require "coq" -- add this
 lsp.pyright.setup(coq.lsp_ensure_capabilities{})
 lsp.quick_lint_js.setup(coq.lsp_ensure_capabilities{})
+util = require "lspconfig/util"
+
+lsp.gopls.setup(
+	coq.lsp_ensure_capabilities{
+		cmd = {"gopls", "serve"},
+		filetypes = {"go", "gomod"},
+		root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+		settings = {
+		  gopls = {
+			analyses = {
+			  unusedparams = true,
+			},
+			staticcheck = true,
+		  },
+		},
+	}
+) 
+
 
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages

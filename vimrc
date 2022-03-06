@@ -26,6 +26,7 @@ call plug#begin()
 	Plug 'morhetz/gruvbox'
 	Plug 'editorconfig/editorconfig-vim'
 	Plug 'wbthomason/packer.nvim'
+	Plug 'j-hui/fidget.nvim'
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 	Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
@@ -200,6 +201,7 @@ nmap <F8> :TagbarToggle<CR>
 
 
 lua << EOF
+require("fidget").setup{}
 require('gitsigns').setup()
 require('Comment').setup()
 require("bufferline").setup{}

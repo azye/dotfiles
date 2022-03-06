@@ -4,11 +4,16 @@ call plug#begin()
 	Plug 'kyazdani42/nvim-web-devicons'
 	Plug 'preservim/nerdcommenter'
 	Plug 'majutsushi/tagbar'
+	Plug 'pangloss/vim-javascript'
+	Plug 'sheerun/vim-polyglot'
+	Plug 'sbdchd/neoformat'
 	Plug 'kyazdani42/nvim-tree.lua'
 	Plug 'tpope/vim-fugitive'
 	Plug 'vimwiki/vimwiki'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
 	Plug 'vim-airline/vim-airline'
+	Plug 'HerringtonDarkholme/yats.vim'
+	Plug 'leafgarland/typescript-vim'
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'nvim-telescope/telescope.nvim'
@@ -217,16 +222,53 @@ highlight NvimTreeFolderIcon guibg=blue
 
 nmap <F8> :TagbarToggle<CR>
 
-
-lua require'nvim-tree'.setup {}
-
-
 lua << EOF
 
 local lsp = require "lspconfig"
 local coq = require "coq" -- add this
-lsp.pyright.setup(coq.lsp_ensure_capabilities{})
-lsp.quick_lint_js.setup(coq.lsp_ensure_capabilities{})
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+
+lsp.pyright.setup(coq.lsp_ensure_capabilities{
+	on_attach = on_attach
+})
+lsp.quick_lint_js.setup(coq.lsp_ensure_capabilities{
+	on_attach = on_attach
+})
+lsp.tsserver.setup(
+	coq.lsp_ensure_capabilities{
+		cmd = { "typescript-language-server", "--stdio" },
+		on_attach = on_attach
+	}
+)
 util = require "lspconfig/util"
 
 lsp.gopls.setup(
@@ -234,6 +276,7 @@ lsp.gopls.setup(
 		cmd = {"gopls", "serve"},
 		filetypes = {"go", "gomod"},
 		root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+		on_attach = on_attach,
 		settings = {
 		  gopls = {
 			analyses = {
@@ -245,6 +288,66 @@ lsp.gopls.setup(
 	}
 ) 
 
+require'nvim-tree'.setup {
+
+
+  disable_netrw        = false,
+  hijack_netrw         = true,
+  open_on_setup        = false,
+  ignore_buffer_on_setup = false,
+  ignore_ft_on_setup   = {},
+  auto_close           = false,
+  auto_reload_on_write = true,
+  open_on_tab          = false,
+  hijack_cursor        = false,
+  update_cwd           = false,
+  hijack_unnamed_buffer_when_opening = false,
+  hijack_directories   = {
+    enable = true,
+    auto_open = true,
+  },
+  update_focused_file = {
+    enable      = false,
+    update_cwd  = false,
+    ignore_list = {}
+  },
+  view = {
+    width = 30,
+    height = 30,
+    hide_root_folder = false,
+    side = 'left',
+    preserve_window_proportions = false,
+    mappings = {
+      custom_only = false,
+      list = {}
+    },
+    number = true,
+    relativenumber = true,
+    signcolumn = "yes"
+  },
+  trash = {
+    cmd = "trash",
+    require_confirm = true
+  },
+  actions = {
+    change_dir = {
+      enable = true,
+      global = false,
+    },
+    open_file = {
+      quit_on_open = true,
+      resize_window = false,
+      window_picker = {
+        enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame", },
+          buftype  = { "nofile", "terminal", "help", },
+        }
+      }
+    }
+  }
+}
 
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -253,6 +356,9 @@ require'nvim-treesitter.configs'.setup {
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
 
+  indent = {
+        enable = true
+  },
   -- List of parsers to ignore installing
   ignore_install = { "javascript" },
 

@@ -2,42 +2,34 @@
 " Vim Plug plugins
 call plug#begin()
 	Plug 'kyazdani42/nvim-web-devicons'
-	Plug 'preservim/nerdcommenter'
+	Plug 'numToStr/Comment.nvim'
+	Plug 'mhinz/vim-startify'
+	Plug 'justinmk/vim-sneak'
 	Plug 'majutsushi/tagbar'
+	Plug 'folke/trouble.nvim'
 	Plug 'pangloss/vim-javascript'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'sbdchd/neoformat'
 	Plug 'kyazdani42/nvim-tree.lua'
 	Plug 'tpope/vim-fugitive'
 	Plug 'vimwiki/vimwiki'
-	Plug 'Xuyuanp/nerdtree-git-plugin'
 	Plug 'vim-airline/vim-airline'
 	Plug 'HerringtonDarkholme/yats.vim'
 	Plug 'leafgarland/typescript-vim'
 	Plug 'nvim-lua/plenary.nvim'
+	Plug 'akinsho/bufferline.nvim'
+	Plug 'lewis6991/gitsigns.nvim'
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'nvim-telescope/telescope.nvim'
-	Plug 'airblade/vim-gitgutter'
 	Plug 'nvim-lua/popup.nvim'
 	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 	Plug 'morhetz/gruvbox'
 	Plug 'editorconfig/editorconfig-vim'
 	Plug 'wbthomason/packer.nvim'
 	Plug 'neovim/nvim-lspconfig'
-	" main one
 	Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-	" 9000+ Snippets
 	Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-
-	" lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
-	" Need to **configure separately**
-
 	Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
-	" - shell repl
-	" - nvim lua api
-	" - scientific calculator
-	" - comment banner
-	" - etc
 call plug#end()
 
 " colorscheme slate
@@ -49,7 +41,7 @@ set hidden " hide unsaved files in buffer when new file is open insead of closin
 set ignorecase " ignore case when searching
 set shiftwidth=4 " sets tab to 4 spaces
 set tabstop=4
-set mouse=a " allots mouse on vim >:(
+set mouse=a " allows mouse on vim >:(
 set smartcase
 set lazyredraw 
 set encoding=utf8
@@ -70,6 +62,8 @@ set nocompatible
 set list " show all whitespace
 set cursorline " highlight cursorline
 set showmatch " highlight parent/bracket/etc matching
+set splitbelow
+set splitright
 
 " NO ARROW KEYS ANYWHERE!!! >:)
 " in Command Mode
@@ -112,12 +106,21 @@ inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 
+" auto brace closing
+imap ,/ </<C-X><C-O> " closes braces with ,/
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+
 " adds k and j to jumplist
 nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
 
 " allows enter and shift enter to insert lines in normal mode
-nmap <S-CR> O<Esc>j
 nmap <CR> o<Esc>k
 
 autocmd BufEnter *.yaml.tmpl :setlocal filetype=yaml
@@ -133,33 +136,6 @@ autocmd vimenter * ++nested colorscheme gruvbox
 " vimwiki configurations
 let g:vimwiki_markdown_link_ext = 1
 let g:vimwiki_list = [{'path': '/mnt/c/Users/alexz/OneDrive/notes', 'syntax': 'markdown', 'ext': '.md'}]
-
-" Create default mappings
-let g:NERDCreateDefaultMappings = 1
-
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
-let g:NERDToggleCheckAllLines = 1
 
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
@@ -222,10 +198,17 @@ highlight NvimTreeFolderIcon guibg=blue
 
 nmap <F8> :TagbarToggle<CR>
 
+
 lua << EOF
+require('gitsigns').setup()
+require('Comment').setup()
+require("bufferline").setup{}
+require("trouble").setup {}
 
 local lsp = require "lspconfig"
-local coq = require "coq" -- add this
+local coq = require "coq"
+local util = require "lspconfig/util"
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -257,6 +240,8 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
+lsp.vimls.setup{}
+
 lsp.pyright.setup(coq.lsp_ensure_capabilities{
 	on_attach = on_attach
 })
@@ -269,7 +254,6 @@ lsp.tsserver.setup(
 		on_attach = on_attach
 	}
 )
-util = require "lspconfig/util"
 
 lsp.gopls.setup(
 	coq.lsp_ensure_capabilities{
@@ -289,28 +273,6 @@ lsp.gopls.setup(
 ) 
 
 require'nvim-tree'.setup {
-
-
-  disable_netrw        = false,
-  hijack_netrw         = true,
-  open_on_setup        = false,
-  ignore_buffer_on_setup = false,
-  ignore_ft_on_setup   = {},
-  auto_close           = false,
-  auto_reload_on_write = true,
-  open_on_tab          = false,
-  hijack_cursor        = false,
-  update_cwd           = false,
-  hijack_unnamed_buffer_when_opening = false,
-  hijack_directories   = {
-    enable = true,
-    auto_open = true,
-  },
-  update_focused_file = {
-    enable      = false,
-    update_cwd  = false,
-    ignore_list = {}
-  },
   view = {
     width = 30,
     height = 30,

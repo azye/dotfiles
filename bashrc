@@ -22,6 +22,8 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
+export GIT_EDITOR=nvim
+
 set -o noclobber # add confirmation for clobbering files
 export EDITOR=nvim # set default editor
 export HISTSIZE=5000 # max number of lines stored in memory by terminal session

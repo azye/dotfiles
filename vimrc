@@ -203,6 +203,7 @@ nnoremap <leader>ul <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
 lua << EOF
+require("fidget").setup{}
 require('gitsigns').setup()
 require('Comment').setup()
 require"fidget".setup{}

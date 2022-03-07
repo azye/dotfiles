@@ -1,69 +1,76 @@
 
 " Vim Plug plugins
 call plug#begin()
-	Plug 'kyazdani42/nvim-web-devicons'
-	Plug 'numToStr/Comment.nvim'
-	Plug 'mhinz/vim-startify'
-	Plug 'justinmk/vim-sneak'
-	Plug 'majutsushi/tagbar'
-	Plug 'folke/trouble.nvim'
-	Plug 'pangloss/vim-javascript'
-	Plug 'sheerun/vim-polyglot'
-	Plug 'sbdchd/neoformat'
-	Plug 'kyazdani42/nvim-tree.lua'
-	Plug 'tpope/vim-fugitive'
-	Plug 'vimwiki/vimwiki'
-	Plug 'vim-airline/vim-airline'
 	Plug 'HerringtonDarkholme/yats.vim'
-	Plug 'leafgarland/typescript-vim'
-	Plug 'nvim-lua/plenary.nvim'
 	Plug 'akinsho/bufferline.nvim'
-	Plug 'lewis6991/gitsigns.nvim'
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-	Plug 'nvim-telescope/telescope.nvim'
-	Plug 'nvim-lua/popup.nvim'
-	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-	Plug 'morhetz/gruvbox'
 	Plug 'editorconfig/editorconfig-vim'
-	Plug 'wbthomason/packer.nvim'
-	Plug 'neovim/nvim-lspconfig'
-	Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+	Plug 'folke/lsp-colors.nvim'
+	Plug 'folke/trouble.nvim'
+	Plug 'j-hui/fidget.nvim'
+	Plug 'justinmk/vim-sneak'
+	Plug 'kyazdani42/nvim-tree.lua'
+	Plug 'kyazdani42/nvim-web-devicons'
+	Plug 'leafgarland/typescript-vim'
+	Plug 'lewis6991/gitsigns.nvim'
+	Plug 'majutsushi/tagbar'
+	Plug 'mhinz/vim-startify'
+	Plug 'morhetz/gruvbox'
 	Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 	Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+	Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'numToStr/Comment.nvim'
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-lua/popup.nvim'
+	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+	Plug 'nvim-telescope/telescope.nvim'
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	Plug 'pangloss/vim-javascript'
+	Plug 'sbdchd/neoformat'
+	Plug 'sheerun/vim-polyglot'
+	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-repeat'
+	Plug 'tpope/vim-speeddating'
+	Plug 'tpope/vim-surround'
+	Plug 'vim-airline/vim-airline'
+	Plug 'vimwiki/vimwiki'
+	Plug 'wbthomason/packer.nvim'
+	Plug 'windwp/nvim-autopairs'
 call plug#end()
 
-" colorscheme slate
 syntax on " enable syntax highlighting
 filetype plugin indent on " follow language specific indentation rules
-set smartindent
-set autoread
-set hidden " hide unsaved files in buffer when new file is open insead of closing
-set ignorecase " ignore case when searching
-set shiftwidth=4 " sets tab to 4 spaces
-set tabstop=4
-set mouse=a " allows mouse on vim >:(
-set smartcase
-set lazyredraw 
-set encoding=utf8
-set nobackup
-set nowb
-set noswapfile
-set colorcolumn=80
-set ruler
-set nu rnu " enable line numbers and relative line numbers
+
 " set ai " auto indent
 " set si " make auto indent smarter, but not necessary with plugin indent on
+set autoread
+set clipboard=unnamed
+set colorcolumn=80
+set cursorline " highlight cursorline
+set encoding=utf8
+set hidden " hide unsaved files in buffer when new file is open insead of closing
 set hlsearch " highlight search results
 set ignorecase
+set ignorecase " ignore case when searching
 set incsearch
-set clipboard=unnamed
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣ " shows all whitespace
-set nocompatible
+set lazyredraw 
 set list " show all whitespace
-set cursorline " highlight cursorline
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣ " shows all whitespace
+set mouse=a " allows mouse on vim >:(
+set nobackup
+set nocompatible
+set noswapfile
+set nowb
+set nu rnu " enable line numbers and relative line numbers
+set ruler
+set shiftwidth=4 " sets tab to 4 spaces
 set showmatch " highlight parent/bracket/etc matching
+set smartcase
+set smartindent
 set splitbelow
 set splitright
+set tabstop=4
+
 
 " NO ARROW KEYS ANYWHERE!!! >:)
 " in Command Mode
@@ -105,16 +112,6 @@ inoremap , ,<c-g>u
 inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
-
-" auto brace closing
-imap ,/ </<C-X><C-O> " closes braces with ,/
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
 
 " adds k and j to jumplist
 nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
@@ -198,10 +195,17 @@ highlight NvimTreeFolderIcon guibg=blue
 
 nmap <F8> :TagbarToggle<CR>
 
+nnoremap <leader>ux <cmd>TroubleToggle<cr>
+nnoremap <leader>uw <cmd>TroubleToggle workspace_diagnostics<cr>
+nnoremap <leader>ud <cmd>TroubleToggle document_diagnostics<cr>
+nnoremap <leader>uq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>ul <cmd>TroubleToggle loclist<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
 lua << EOF
 require('gitsigns').setup()
 require('Comment').setup()
+require"fidget".setup{}
 require("bufferline").setup{}
 require("trouble").setup {}
 
@@ -338,4 +342,42 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+local remap = vim.api.nvim_set_keymap
+local npairs = require('nvim-autopairs')
+
+npairs.setup({ map_bs = false, map_cr = false })
+
+vim.g.coq_settings = { keymap = { recommended = false } }
+
+-- these mappings are coq recommended mappings unrelated to nvim-autopairs
+remap('i', '<esc>', [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
+remap('i', '<c-c>', [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
+remap('i', '<tab>', [[pumvisible() ? "<c-n>" : "<tab>"]], { expr = true, noremap = true })
+remap('i', '<s-tab>', [[pumvisible() ? "<c-p>" : "<bs>"]], { expr = true, noremap = true })
+
+-- skip it, if you use another global object
+_G.MUtils= {}
+
+MUtils.CR = function()
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+      return npairs.esc('<c-y>')
+    else
+      return npairs.esc('<c-e>') .. npairs.autopairs_cr()
+    end
+  else
+    return npairs.autopairs_cr()
+  end
+end
+remap('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
+
+MUtils.BS = function()
+  if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
+    return npairs.esc('<c-e>') .. npairs.autopairs_bs()
+  else
+    return npairs.autopairs_bs()
+  end
+end
+remap('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
 EOF

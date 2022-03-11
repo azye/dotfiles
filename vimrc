@@ -2,7 +2,6 @@
 " Vim Plug plugins
 call plug#begin()
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'akinsho/bufferline.nvim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'folke/lsp-colors.nvim'
 Plug 'folke/trouble.nvim'
@@ -12,6 +11,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'leafgarland/typescript-vim'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
 Plug 'morhetz/gruvbox'
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
@@ -41,7 +41,7 @@ filetype plugin indent on " follow language specific indentation rules
 " Reminder:
 " :h <command>
 set autoread
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 set colorcolumn=80
 set cursorline
 set encoding=utf8
@@ -97,6 +97,14 @@ vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register
+" without yanking it
+vnoremap <leader>p "_dP
+
 " closes a window
 noremap <leader>x :q<Cr>
 
@@ -115,6 +123,10 @@ inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 
+nnoremap <Leader>+ :vertical resize +5<CR>
+nnoremap <Leader>- :vertical resize -5<CR>
+nnoremap <Leader>rp :resize 100<CR>
+
 " adds k and j to jumplist
 nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
@@ -132,7 +144,6 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <C-F> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <C-O> <cmd>Telescope find_files<cr>
 
 autocmd vimenter * ++nested colorscheme gruvbox
 
@@ -203,13 +214,13 @@ lua << EOF
 require("fidget").setup{}
 require('gitsigns').setup()
 require('Comment').setup()
-require"fidget".setup{}
-require("bufferline").setup{}
 require("trouble").setup {}
 
 local lsp = require "lspconfig"
 local coq = require "coq"
 local util = require "lspconfig/util"
+
+require('telescope').load_extension('fzf')
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -242,7 +253,10 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-lsp.vimls.setup{}
+lsp.vimls.setup(coq.lsp_ensure_capabilities{
+	on_attach = on_attach
+})
+
 
 lsp.pyright.setup(coq.lsp_ensure_capabilities{
 	on_attach = on_attach

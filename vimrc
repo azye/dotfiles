@@ -1,75 +1,74 @@
 
 " Vim Plug plugins
 call plug#begin()
-	Plug 'HerringtonDarkholme/yats.vim'
-	Plug 'akinsho/bufferline.nvim'
-	Plug 'editorconfig/editorconfig-vim'
-	Plug 'folke/lsp-colors.nvim'
-	Plug 'folke/trouble.nvim'
-	Plug 'j-hui/fidget.nvim'
-	Plug 'justinmk/vim-sneak'
-	Plug 'kyazdani42/nvim-tree.lua'
-	Plug 'kyazdani42/nvim-web-devicons'
-	Plug 'leafgarland/typescript-vim'
-	Plug 'lewis6991/gitsigns.nvim'
-	Plug 'majutsushi/tagbar'
-	Plug 'mhinz/vim-startify'
-	Plug 'morhetz/gruvbox'
-	Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-	Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
-	Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-	Plug 'neovim/nvim-lspconfig'
-	Plug 'numToStr/Comment.nvim'
-	Plug 'nvim-lua/plenary.nvim'
-	Plug 'nvim-lua/popup.nvim'
-	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-	Plug 'nvim-telescope/telescope.nvim'
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-	Plug 'pangloss/vim-javascript'
-	Plug 'sbdchd/neoformat'
-	Plug 'sheerun/vim-polyglot'
-	Plug 'tpope/vim-fugitive'
-	Plug 'tpope/vim-repeat'
-	Plug 'tpope/vim-speeddating'
-	Plug 'tpope/vim-surround'
-	Plug 'vim-airline/vim-airline'
-	Plug 'vimwiki/vimwiki'
-	Plug 'wbthomason/packer.nvim'
-	Plug 'windwp/nvim-autopairs'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'akinsho/bufferline.nvim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'folke/lsp-colors.nvim'
+Plug 'folke/trouble.nvim'
+Plug 'j-hui/fidget.nvim'
+Plug 'justinmk/vim-sneak'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'leafgarland/typescript-vim'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'mhinz/vim-startify'
+Plug 'morhetz/gruvbox'
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'numToStr/Comment.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'pangloss/vim-javascript'
+Plug 'sbdchd/neoformat'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'wbthomason/packer.nvim'
 call plug#end()
 
 syntax on " enable syntax highlighting
 filetype plugin indent on " follow language specific indentation rules
 
-" set ai " auto indent
-" set si " make auto indent smarter, but not necessary with plugin indent on
+" Reminder:
+" :h <command>
 set autoread
 set clipboard=unnamed
 set colorcolumn=80
-set cursorline " highlight cursorline
+set cursorline
 set encoding=utf8
-set hidden " hide unsaved files in buffer when new file is open insead of closing
-set hlsearch " highlight search results
+set hidden
+set hlsearch
 set ignorecase
-set ignorecase " ignore case when searching
 set incsearch
-set lazyredraw 
-set list " show all whitespace
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣ " shows all whitespace
+set lazyredraw
+set list " this along with next line shows whitespace
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set mouse=a " allows mouse on vim >:(
 set nobackup
 set nocompatible
 set noswapfile
 set nowb
-set nu rnu " enable line numbers and relative line numbers
+set number
+set relativenumber
 set ruler
-set shiftwidth=4 " sets tab to 4 spaces
-set showmatch " highlight parent/bracket/etc matching
+set shiftwidth=4
+set showmatch
 set smartcase
 set smartindent
+set autoindent
 set splitbelow
 set splitright
 set tabstop=4
+set inccommand=split
 
 
 " NO ARROW KEYS ANYWHERE!!! >:)
@@ -120,19 +119,19 @@ nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
 " allows enter and shift enter to insert lines in normal mode
 nmap <CR> o<Esc>k
 
+" File type remappings
 autocmd BufEnter *.yaml.tmpl :setlocal filetype=yaml
 
-nnoremap <C-p> <cmd>Telescope find_files<cr>
+if has('nvim')
+nnoremap <C-p> <cmd>Telescope<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <C-F> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <C-O> <cmd>Telescope find_files<cr>
 
 autocmd vimenter * ++nested colorscheme gruvbox
-
-" vimwiki configurations
-let g:vimwiki_markdown_link_ext = 1
-let g:vimwiki_list = [{'path': '/mnt/c/Users/alexz/OneDrive/notes', 'syntax': 'markdown', 'ext': '.md'}]
 
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
@@ -146,11 +145,11 @@ let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree 
 let g:nvim_tree_create_in_closed_folder = 1 "0 by default, When creating files, sets the path of a file when cursor is on a closed folder to the parent folder when 0, and inside the folder when 1.
 let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
 let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 1,
-    \ 'files': 1,
-    \ 'folder_arrows': 1,
-    \ }
+	\ 'git': 1,
+	\ 'folders': 1,
+	\ 'files': 1,
+	\ 'folder_arrows': 1,
+	\ }
 "If 0, do not show the icons for one of 'git' 'folder' and 'files'
 "1 by default, notice that if 'files' is 1, it will only display
 "if nvim-web-devicons is installed and on your runtimepath.
@@ -160,40 +159,35 @@ let g:nvim_tree_show_icons = {
 " default will show icon by default if no icon is provided
 " default shows no icon by default
 let g:nvim_tree_icons = {
-    \ 'default': '',
-    \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   }
-    \ }
+	\ 'default': '',
+	\ 'symlink': '',
+	\ 'git': {
+	\   'unstaged': "✗",
+	\   'staged': "✓",
+	\   'unmerged': "",
+	\   'renamed': "➜",
+	\   'untracked': "★",
+	\   'deleted': "",
+	\   'ignored': "◌"
+	\   },
+	\ 'folder': {
+	\   'arrow_open': "",
+	\   'arrow_closed': "",
+	\   'default': "",
+	\   'open': "",
+	\   'empty': "",
+	\   'empty_open': "",
+	\   'symlink': "",
+	\   'symlink_open': "",
+	\   }
+	\ }
 
+highlight NvimTreeFolderIcon guibg=blue
 nnoremap <C-n> :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
-" NvimTreeOpen, NvimTreeClose, NvimTreeFocus, NvimTreeFindFileToggle, and NvimTreeResize are also available if you need them
 
 set termguicolors " this variable must be enabled for colors to be applied properly
-
-" a list of groups can be found at `:help nvim_tree_highlight`
-highlight NvimTreeFolderIcon guibg=blue
-
-nmap <F8> :TagbarToggle<CR>
 
 nnoremap <leader>ux <cmd>TroubleToggle<cr>
 nnoremap <leader>uw <cmd>TroubleToggle workspace_diagnostics<cr>
@@ -279,40 +273,40 @@ lsp.gopls.setup(
 
 require'nvim-tree'.setup {
   view = {
-    width = 30,
-    height = 30,
-    hide_root_folder = false,
-    side = 'left',
-    preserve_window_proportions = false,
-    mappings = {
-      custom_only = false,
-      list = {}
-    },
-    number = true,
-    relativenumber = true,
-    signcolumn = "yes"
+	width = 30,
+	height = 30,
+	hide_root_folder = false,
+	side = 'left',
+	preserve_window_proportions = false,
+	mappings = {
+	  custom_only = false,
+	  list = {}
+	},
+	number = true,
+	relativenumber = true,
+	signcolumn = "yes"
   },
   trash = {
-    cmd = "trash",
-    require_confirm = true
+	cmd = "trash",
+	require_confirm = true
   },
   actions = {
-    change_dir = {
-      enable = true,
-      global = false,
-    },
-    open_file = {
-      quit_on_open = true,
-      resize_window = false,
-      window_picker = {
-        enable = true,
-        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-        exclude = {
-          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame", },
-          buftype  = { "nofile", "terminal", "help", },
-        }
-      }
-    }
+	change_dir = {
+	  enable = true,
+	  global = false,
+	},
+	open_file = {
+	  quit_on_open = true,
+	  resize_window = false,
+	  window_picker = {
+		enable = true,
+		chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+		exclude = {
+		  filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame", },
+		  buftype  = { "nofile", "terminal", "help", },
+		}
+	  }
+	}
   }
 }
 
@@ -324,61 +318,24 @@ require'nvim-treesitter.configs'.setup {
   sync_install = false,
 
   indent = {
-        enable = true
+		enable = true
   },
   -- List of parsers to ignore installing
   ignore_install = { "javascript" },
 
   highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
+	-- `false` will disable the whole extension
+	enable = true,
 
-    -- list of language that will be disabled
-    disable = { },
+	-- list of language that will be disabled
+	disable = { },
 
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+	-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+	-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+	-- Using this option may slow down your editor, and you may see some duplicate highlights.
+	-- Instead of true it can also be a list of languages
+	additional_vim_regex_highlighting = false,
   },
 }
-
-local remap = vim.api.nvim_set_keymap
-local npairs = require('nvim-autopairs')
-
-npairs.setup({ map_bs = false, map_cr = false })
-
-vim.g.coq_settings = { keymap = { recommended = false } }
-
--- these mappings are coq recommended mappings unrelated to nvim-autopairs
-remap('i', '<esc>', [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
-remap('i', '<c-c>', [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
-remap('i', '<tab>', [[pumvisible() ? "<c-n>" : "<tab>"]], { expr = true, noremap = true })
-remap('i', '<s-tab>', [[pumvisible() ? "<c-p>" : "<bs>"]], { expr = true, noremap = true })
-
--- skip it, if you use another global object
-_G.MUtils= {}
-
-MUtils.CR = function()
-  if vim.fn.pumvisible() ~= 0 then
-    if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
-      return npairs.esc('<c-y>')
-    else
-      return npairs.esc('<c-e>') .. npairs.autopairs_cr()
-    end
-  else
-    return npairs.autopairs_cr()
-  end
-end
-remap('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
-
-MUtils.BS = function()
-  if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
-    return npairs.esc('<c-e>') .. npairs.autopairs_bs()
-  else
-    return npairs.autopairs_bs()
-  end
-end
-remap('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
 EOF
+end

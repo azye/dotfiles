@@ -51,7 +51,8 @@ set ignorecase
 set incsearch
 set lazyredraw
 set list " this along with next line shows whitespace
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+" set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣ " shows all whitespace
+set listchars=eol:¬,tab:▸·,trail:#,extends:❯,precedes:❮,space:·,nbsp:␣ " shows all whitespace
 set mouse=a " allows mouse on vim >:(
 set nobackup
 set nocompatible
@@ -104,6 +105,8 @@ nnoremap Y y$
 " makes n N and J center on screen
 nnoremap n nzzzv
 nnoremap N Nzzzv
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
 nnoremap J mzJ`z
 nnoremap <C-j> :cnext<CR>zzzv
 " makes the following symbols breakpoints in undo chain

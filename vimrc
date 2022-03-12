@@ -5,6 +5,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'folke/lsp-colors.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'godlygeek/tabular'
 Plug 'j-hui/fidget.nvim'
 Plug 'justinmk/vim-sneak'
 Plug 'kyazdani42/nvim-tree.lua'
@@ -25,6 +26,7 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'pangloss/vim-javascript'
+Plug 'preservim/vim-markdown'
 Plug 'sbdchd/neoformat'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
@@ -146,6 +148,11 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 autocmd vimenter * ++nested colorscheme gruvbox
+
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_autowrite = 1
 
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).

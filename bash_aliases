@@ -1,4 +1,8 @@
 
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+	alias pbcopy='win32yank.exe'
+fi
+
 #
 # Symbol aliases
 #

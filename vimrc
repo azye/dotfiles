@@ -5,9 +5,11 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'folke/lsp-colors.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'ggandor/lightspeed.nvim'
 Plug 'godlygeek/tabular'
 Plug 'j-hui/fidget.nvim'
-Plug 'justinmk/vim-sneak'
+Plug 'jiangmiao/auto-pairs'
+" Plug 'justinmk/vim-sneak'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'leafgarland/typescript-vim'
@@ -19,6 +21,7 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'neovim/nvim-lspconfig'
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'numToStr/Comment.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -27,8 +30,11 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'pangloss/vim-javascript'
 Plug 'preservim/vim-markdown'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'rhysd/clever-f.vim'
 Plug 'sbdchd/neoformat'
 Plug 'sheerun/vim-polyglot'
+Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
@@ -43,7 +49,7 @@ filetype plugin indent on " follow language specific indentation rules
 " Reminder:
 " :h <command>
 set autoread
-set clipboard^=unnamed,unnamedplus
+set clipboard=unnamedplus
 set colorcolumn=80
 set cursorline
 set encoding=utf8
@@ -139,6 +145,11 @@ nmap <CR> o<Esc>k
 " File type remappings
 autocmd BufEnter *.yaml.tmpl :setlocal filetype=yaml
 
+" cleverf plugin settings
+nmap <Esc> <Plug>(clever-f-reset)
+" map ; <Plug>(clever-f-repeat-forward)
+" map , <Plug>(clever-f-repeat-back)
+
 if has('nvim')
 nnoremap <C-p> <cmd>Telescope<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -217,6 +228,15 @@ nnoremap <leader>uq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>ul <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 lua << EOF
 require("fidget").setup{}
 require('gitsigns').setup()
@@ -227,7 +247,6 @@ local lsp = require "lspconfig"
 local coq = require "coq"
 local util = require "lspconfig/util"
 
-require('telescope').load_extension('fzf')
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -333,6 +352,8 @@ require'nvim-tree'.setup {
 	}
   }
 }
+
+require('telescope').load_extension('fzf')
 
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages

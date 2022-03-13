@@ -1,2 +1,3 @@
+#!/bin/bash
 
-pacman -S neovim tmux fd man nodejs npm
+sudo pacman -S neovim tmux fd man nodejs npm fzf fd ripgrep

@@ -1,4 +1,4 @@
-
+if has('nvim')
 " Vim Plug plugins
 call plug#begin()
 Plug 'HerringtonDarkholme/yats.vim'
@@ -42,6 +42,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'wbthomason/packer.nvim'
 call plug#end()
+end
 
 syntax on " enable syntax highlighting
 filetype plugin indent on " follow language specific indentation rules

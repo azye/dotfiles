@@ -52,6 +52,7 @@ set autoread
 set clipboard=unnamedplus
 set colorcolumn=80
 set cursorline
+set cursorcolumn
 set encoding=utf8
 set hidden
 set hlsearch
@@ -117,7 +118,10 @@ vnoremap <leader>p "_dP
 noremap <leader>x :q<Cr>
 
 " makes Y copy from cursor to EOL
-nnoremap Y y$
+nnoremap Y "+y
+vnoremap Y "+y
+nnoremap yY ^"+y$
+
 " makes n N and J center on screen
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -283,7 +287,6 @@ lsp.vimls.setup(coq.lsp_ensure_capabilities{
 	on_attach = on_attach
 })
 
-
 lsp.pyright.setup(coq.lsp_ensure_capabilities{
 	on_attach = on_attach
 })
@@ -312,7 +315,7 @@ lsp.gopls.setup(
 		  },
 		},
 	}
-) 
+)
 
 require'nvim-tree'.setup {
   view = {

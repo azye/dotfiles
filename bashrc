@@ -80,4 +80,4 @@ fi
 [ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
 [ -f "$PREFIX/share/fzf/key-bindings.bash" ] && . "$PREFIX/share/fzf/key-bindings.bash"
 [ -f "$PREFIX/share/fzf/completion.bash" ] && . "$PREFIX/share/fzf/completion.bash"
-
+[ -r "/usr/local/etc/profile.d/bash_completion.sh" ] && . "/usr/local/etc/profile.d/bash_completion.sh"

@@ -27,6 +27,7 @@ alias py3='python3'
 alias err='echo $?' # get last error code
 alias path='echo -e ${PATH//:/\\n}'
 alias g='git'
+alias G='git'
 alias gs='git status'
 alias d='docker'
 alias cdg='cd $GOPATH/src'

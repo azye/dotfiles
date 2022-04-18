@@ -7,6 +7,7 @@ Plug 'folke/lsp-colors.nvim'
 Plug 'folke/trouble.nvim'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'godlygeek/tabular'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'j-hui/fidget.nvim'
 Plug 'jiangmiao/auto-pairs'
 " Plug 'justinmk/vim-sneak'

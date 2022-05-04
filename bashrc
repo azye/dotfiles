@@ -76,6 +76,7 @@ else
 fi
 
 [ -f ~/.fzf.bash ] && . ~/.fzf.bash
+test -f ~/.git-completion.bash && . $_
 [ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
 [ -f "$PREFIX/share/fzf/key-bindings.bash" ] && . "$PREFIX/share/fzf/key-bindings.bash"

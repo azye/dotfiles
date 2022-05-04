@@ -171,7 +171,6 @@ let g:vim_markdown_strikethrough = 1
 let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_autowrite = 1
 
-let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
 let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
@@ -295,6 +294,7 @@ lsp.pyright.setup(coq.lsp_ensure_capabilities{
 lsp.quick_lint_js.setup(coq.lsp_ensure_capabilities{
 	on_attach = on_attach
 })
+
 lsp.tsserver.setup(
 	coq.lsp_ensure_capabilities{
 		cmd = { "typescript-language-server", "--stdio" },
@@ -338,6 +338,19 @@ require'nvim-tree'.setup {
 	cmd = "trash",
 	require_confirm = true
   },
+  renderer = {
+    indent_markers = {
+      enable = true,
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        none = "  ",
+      },
+    },
+    icons = {
+      webdev_colors = true,
+    },
+  },
   actions = {
 	change_dir = {
 	  enable = true,
@@ -361,30 +374,30 @@ require'nvim-tree'.setup {
 require('telescope').load_extension('fzf')
 
 require'nvim-treesitter.configs'.setup {
-  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = "maintained",
+  -- A list of parser names, or "all"
+  ensure_installed = { "c", "lua", "rust" },
 
-  -- Install languages synchronously (only applied to `ensure_installed`)
+  -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
 
-  indent = {
-		enable = true
-  },
-  -- List of parsers to ignore installing
+  -- List of parsers to ignore installing (for "all")
   ignore_install = { "javascript" },
 
   highlight = {
-	-- `false` will disable the whole extension
-	enable = true,
+    -- `false` will disable the whole extension
+    enable = true,
 
-	-- list of language that will be disabled
-	disable = { },
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { "c", "rust" },
 
-	-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-	-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-	-- Using this option may slow down your editor, and you may see some duplicate highlights.
-	-- Instead of true it can also be a list of languages
-	additional_vim_regex_highlighting = false,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
   },
 }
 EOF

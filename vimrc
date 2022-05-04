@@ -135,7 +135,6 @@ nnoremap <Leader>- :vertical resize -5<CR>
 nnoremap <Leader>rp :resize 100<CR>
 
 :cabbrev h vert h
-:cabbrev G tab G
 
 " adds k and j to jumplist
 nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'

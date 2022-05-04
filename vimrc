@@ -10,7 +10,6 @@ Plug 'godlygeek/tabular'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'j-hui/fidget.nvim'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'justinmk/vim-sneak'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'leafgarland/typescript-vim'
@@ -47,7 +46,6 @@ end
 
 syntax on " enable syntax highlighting
 filetype plugin indent on " follow language specific indentation rules
-
 " Reminder:
 " :h <command>
 set autoread
@@ -90,19 +88,14 @@ set inccommand=split
 " cnoremap <Right> <Nop>
 " cnoremap <Up> <Nop>
 "
-" in Insert Mode
 inoremap <Down> <Nop>
 inoremap <Left> <Nop>
 inoremap <Right> <Nop>
 inoremap <Up> <Nop>
-
-" in Normal Mode
 nnoremap <Down> <Nop>
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
 nnoremap <Up> <Nop>
-
-" in Visual Mode
 vnoremap <Down> <Nop>
 vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
@@ -140,6 +133,9 @@ inoremap ? ?<c-g>u
 nnoremap <Leader>+ :vertical resize +5<CR>
 nnoremap <Leader>- :vertical resize -5<CR>
 nnoremap <Leader>rp :resize 100<CR>
+
+:cabbrev h vert h
+:cabbrev G tab G
 
 " adds k and j to jumplist
 nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'

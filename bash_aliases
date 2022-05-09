@@ -52,3 +52,13 @@ alias dot='cd ~/dotfiles'
 alias ws='cd ~/ws'
 alias resource='. ~/.bash_profile'
 alias tmux='tmux -2'
+
+# hacky way to get aliases
+autocomplete_alias() {
+	complete_output=$(complete -p $1)
+	eval "${complete_output/ $1/""} $2"
+}
+
+autocomplete_alias git G
+autocomplete_alias git g
+

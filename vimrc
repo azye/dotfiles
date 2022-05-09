@@ -140,6 +140,9 @@ nnoremap <Leader>rp :resize 100<CR>
 nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
 
+nnoremap / /\v
+cnoremap %s/ %s/\v
+
 " allows enter and shift enter to insert lines in normal mode
 nmap <CR> o<Esc>k
 

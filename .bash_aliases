@@ -21,6 +21,7 @@ alias c='clear'
 alias h='history'
 alias mk='minikube'
 alias resource='source ~/.bashrc'
+alias python='python3'
 alias py='python'
 alias py2='python2'
 alias py3='python3'
@@ -44,14 +45,17 @@ alias kgs='kubectl get service'
 alias klf='kubectl logs -f'
 alias vi='nvim'
 alias vim='nvim'
-alias v='vim'
+alias v='nvim'
 alias vimg='vim +Git +only'
-alias t='tmux'
 alias notes='cd ~/notes'
 alias dot='cd ~/dotfiles'
 alias ws='cd ~/ws'
 alias resource='. ~/.bash_profile'
 alias tmux='tmux -2'
+alias t='tmux -2'
+
+
+
 
 # hacky way to get aliases
 autocomplete_alias() {

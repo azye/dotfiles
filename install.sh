@@ -164,15 +164,9 @@ install_ubuntu_packages() {
         "bash-completion"
     )
     
-    # Install packages
-    for package in "${ubuntu_packages[@]}"; do
-        if dpkg -l "$package" >/dev/null 2>&1; then
-            log_info "$package is already installed"
-        else
-            log_info "Installing $package..."
-            sudo apt install -y "$package"
-        fi
-    done
+    # Install packages (idempotent): apt will skip already-installed ones
+    log_info "Installing/validating packages: ${ubuntu_packages[*]}"
+    sudo apt install -y "${ubuntu_packages[@]}"
     
     # Install fzf key bindings
     if [[ -f /usr/share/doc/fzf/install ]]; then
